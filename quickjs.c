@@ -43173,6 +43173,7 @@ static int getTimezoneOffset(int64_t time)
 {
     time_t ti;
     int res;
+    fprintf(stderr, "%s(%" PRId64 ")", __func__, time);
     
     time /= 1000; /* convert to seconds */
     if (sizeof(time_t) == 4) {
@@ -43196,21 +43197,25 @@ static int getTimezoneOffset(int64_t time)
         }
     }
     ti = time;
-    struct tm tm;
 #if defined(_WIN32)
     {
+        struct tm *tm;
         time_t gm_ti, loc_ti;
         
+        fprintf(stderr, "before gmtime\n");
         tm = gmtime(&ti);
-        gm_ti = mktime(&tm);
+        gm_ti = mktime(tm);
         
+        fprintf(stderr, "before localtime\n");
         tm = localtime(&ti);
-        loc_ti = mktime(&tm);
+        fprintf(stderr, "before mktime\n");
+        loc_ti = mktime(tm);
 
         res = (gm_ti - loc_ti) / 60;
     }
 #else
     {
+        struct tm tm;
         localtime_r(&ti, &tm);
         res = -tm.tm_gmtoff / 60;
     }
