@@ -43199,7 +43199,7 @@ static int getTimezoneOffset(int64_t time)
         }
     }
     ti = time;
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
     {
         struct tm *tm;
         time_t gm_ti, loc_ti;
