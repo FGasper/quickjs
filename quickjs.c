@@ -43196,22 +43196,21 @@ static int getTimezoneOffset(int64_t time)
         }
     }
     ti = time;
+    struct tm tm;
 #if defined(_WIN32)
     {
-        struct tm *tm;
         time_t gm_ti, loc_ti;
         
         tm = gmtime(&ti);
-        gm_ti = mktime(tm);
+        gm_ti = mktime(&tm);
         
         tm = localtime(&ti);
-        loc_ti = mktime(tm);
+        loc_ti = mktime(&tm);
 
         res = (gm_ti - loc_ti) / 60;
     }
 #else
     {
-        struct tm tm;
         localtime_r(&ti, &tm);
         res = -tm.tm_gmtoff / 60;
     }
