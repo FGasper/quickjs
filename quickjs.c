@@ -50057,8 +50057,10 @@ static JSValue js_date_getTimezoneOffset(JSContext *ctx, JSValueConst this_val,
         return JS_EXCEPTION;
     if (isnan(v))
         return JS_NAN;
-    else
+    else {
+        fprintf(stderr, "%s calling getTimezoneOffset(%" PRId64 ")\n", __func__, (int64_t)trunc(v));
         return JS_NewInt64(ctx, getTimezoneOffset((int64_t)trunc(v)));
+    }
 }
 
 static JSValue js_date_getTime(JSContext *ctx, JSValueConst this_val,
