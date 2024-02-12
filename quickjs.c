@@ -43173,7 +43173,7 @@ static int getTimezoneOffset(int64_t time)
 {
     time_t ti;
     int res;
-    fprintf(stderr, "%s(%" PRId64 ")", __func__, time);
+    fprintf(stderr, "%s(%" PRId64 ")\n", __func__, time);
     
     time /= 1000; /* convert to seconds */
     if (sizeof(time_t) == 4) {
