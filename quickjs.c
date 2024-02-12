@@ -43171,10 +43171,11 @@ static const JSCFunctionListEntry js_math_obj[] = {
    between UTC time and local time 'd' in minutes */
 static int getTimezoneOffset(int64_t time)
 {
+    assert(time >= 0 /* time must be positive */);
     time_t ti;
     int res;
     fprintf(stderr, "%s(%" PRId64 ")\n", __func__, time);
-    
+
     time /= 1000; /* convert to seconds */
     if (sizeof(time_t) == 4) {
         /* on 32-bit systems, we need to clamp the time value to the
